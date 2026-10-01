@@ -52,7 +52,7 @@ const Login = ({ logged, setislogged }) => {
   }
   return (
     <>
-    <ToastContainer />
+    
     <div className="login-page">
 
       <div className="login-container">
