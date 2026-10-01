@@ -2,6 +2,8 @@ import axios from 'axios'
 import { useFormik } from 'formik'
 import React, { useState } from 'react'
 import { Link, Links, useNavigate } from 'react-router-dom'
+import { ToastContainer, toast } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 import * as yup from "yup"
 import '../App.css'
 const Login = ({ logged, setislogged }) => {
@@ -25,9 +27,13 @@ const Login = ({ logged, setislogged }) => {
           console.log(response)
           setislogged(true)
           formik.resetForm()
+          toast.success("login successful!")
           navigate("/")
 
         } catch (error) {
+          toast.error(
+            error.response?.data?.message || "Login failed"
+          )
           setislogged(false)
           console.log(error.response?.data?.message)
         } finally {
@@ -45,6 +51,8 @@ const Login = ({ logged, setislogged }) => {
     );
   }
   return (
+    <>
+    <ToastContainer />
     <div className="login-page">
 
       <div className="login-container">
@@ -104,14 +112,15 @@ const Login = ({ logged, setislogged }) => {
           >
             Login
           </button>
-         <Link  to="/forgot-password"><button className='button-change-password'>Change password</button></Link>
+          <Link to="/forgot-password"><button className='button-change-password'>Change password</button></Link>
 
         </form>
-        
+
       </div>
-     
+
 
     </div>
+    </>
   )
 }
 
