@@ -2,6 +2,8 @@ import axios from 'axios'
 import { useFormik } from 'formik'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { ToastContainer, toast } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 import * as yup from "yup"
 import '../App.css'
 
@@ -43,12 +45,15 @@ const Register = () => {
 
         formik.resetForm()
 
-        alert("Registration successful")
+        toast.success("Registration successful!")
 
         navigate("/login")
 
       } catch (error) {
         console.log(error.response?.data?.data)
+        toast.error(
+          error.response?.data?.data || "Registration failed"
+        )
 
       } finally {
         setisloading(false)
@@ -66,110 +71,113 @@ const Register = () => {
   }
 
   return (
-    <div className="register-page">
+    <>
+      <ToastContainer />
+      <div className="register-page">
 
-      <div className="register-container">
+        <div className="register-container">
 
-        <h2>Register</h2>
+          <h2>Register</h2>
 
-        <form
-          className="register-form"
-          onSubmit={formik.handleSubmit}
-        >
+          <form
+            className="register-form"
+            onSubmit={formik.handleSubmit}
+          >
 
-          {/* Username */}
+            {/* Username */}
 
-          <div className="form-group">
+            <div className="form-group">
 
-            <label>Username:</label>
+              <label>Username:</label>
 
-            {
-              formik.touched.username && formik.errors.username ?
-                <p className="register-error">
-                  {formik.errors.username}
-                </p>
-                : null
-            }
+              {
+                formik.touched.username && formik.errors.username ?
+                  <p className="register-error">
+                    {formik.errors.username}
+                  </p>
+                  : null
+              }
 
-            <input
-              type="text"
-              placeholder="Enter username"
-              {...formik.getFieldProps("username")}
-            />
+              <input
+                type="text"
+                placeholder="Enter username"
+                {...formik.getFieldProps("username")}
+              />
 
-          </div>
-
-
-          {/* Email */}
-
-          <div className="form-group">
-
-            <label>Email:</label>
-
-            {
-              formik.touched.email && formik.errors.email ?
-                <p className="register-error">
-                  {formik.errors.email}
-                </p>
-                : null
-            }
-
-            <input
-              type="email"
-              placeholder="Enter email"
-              {...formik.getFieldProps("email")}
-            />
-
-          </div>
+            </div>
 
 
-          {/* Password */}
+            {/* Email */}
 
-          <div className="form-group">
+            <div className="form-group">
 
-            <label>Password:</label>
+              <label>Email:</label>
 
-            {
-              formik.touched.password && formik.errors.password ?
-                <p className="register-error">
-                  {formik.errors.password}
-                </p>
-                : null
-            }
+              {
+                formik.touched.email && formik.errors.email ?
+                  <p className="register-error">
+                    {formik.errors.email}
+                  </p>
+                  : null
+              }
 
-            <input
-              type="password"
-              placeholder="Enter password"
-              {...formik.getFieldProps("password")}
-            />
+              <input
+                type="email"
+                placeholder="Enter email"
+                {...formik.getFieldProps("email")}
+              />
 
-          </div>
+            </div>
 
 
-          {/* Register Button */}
+            {/* Password */}
+
+            <div className="form-group">
+
+              <label>Password:</label>
+
+              {
+                formik.touched.password && formik.errors.password ?
+                  <p className="register-error">
+                    {formik.errors.password}
+                  </p>
+                  : null
+              }
+
+              <input
+                type="password"
+                placeholder="Enter password"
+                {...formik.getFieldProps("password")}
+              />
+
+            </div>
+
+
+            {/* Register Button */}
+
+            <button
+              className="register-button"
+              type="submit"
+            >
+              Register
+            </button>
+
+          </form>
+
+
+          {/* Login Button */}
 
           <button
-            className="register-button"
-            type="submit"
+            className="login-link-button"
+            onClick={() => navigate("/login")}
           >
-            Register
+            Already have an account? Login
           </button>
 
-        </form>
-
-
-        {/* Login Button */}
-
-        <button
-          className="login-link-button"
-          onClick={() => navigate("/login")}
-        >
-          Already have an account? Login
-        </button>
+        </div>
 
       </div>
-
-    </div>
+    </>
   )
 }
 

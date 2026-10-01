@@ -10,6 +10,8 @@ import ResetPassword from './components/ResetPassword'
 import ForgotPassword from './components/ForgotPassword'
 import PublicRoute from './components/PublicRoute'
 import ProtectRoute from './components/protectRoute'
+import { ToastContainer, toast } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
 const App = () => {
   const [logged, setislogged] = useState(false)
@@ -101,7 +103,10 @@ const App = () => {
     );
   }
   return (
+    <>
+     <ToastContainer />
     <RouterProvider router={router} />
+    </>
   )
 }
 
